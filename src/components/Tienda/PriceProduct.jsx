@@ -1,7 +1,7 @@
 import { Flex, Text } from "@chakra-ui/react";
 import React from "react";
 
-export default function PriceProduct({ precio, descuento, precio_final }) {
+export  function PriceProduct({ precio, descuento, precio_final }) {
   return (
     <Flex gap={"1rem"}>
       <Text fontWeight={400} fontSize={"lg"}>

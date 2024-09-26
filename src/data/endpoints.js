@@ -12,3 +12,28 @@ const API =
 }
 
 export  {API};
+
+
+
+[
+    {
+    "categoria_id": 1,
+    "nombre": "Accesorios",
+    "descripcion": "Artículos diseñados para mejorar la comodidad, seguridad y estilo de las mascotas, incluyendo camas, collares, correas, entre otros."
+    },
+    {
+    "categoria_id": 2,
+    "nombre": "Juguetes",
+    "descripcion": "Productos destinados a la diversión y entretenimiento de las mascotas, ayudando a mantener su actividad física y mental."
+    },
+    {
+    "categoria_id": 3,
+    "nombre": "Refugios",
+    "descripcion": "Productos de la más alta calidad para garantizar un refugio óptimo y cómodo para tu mascota"
+    },
+    {
+    "categoria_id": 4,
+    "nombre": "Alimento",
+    "descripcion": "Productos de la más alta calidad para garantizar una alimentación perfecta para tu mascota"
+    }
+    ]

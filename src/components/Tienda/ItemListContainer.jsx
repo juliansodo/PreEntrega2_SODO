@@ -3,18 +3,14 @@ import {
   Grid,
   GridItem,
   Stack,
-  Center,
-  Heading,
-  Text,
-  Button,
-  Box,
+  Center
 } from "@chakra-ui/react";
-import React, { useEffect } from "react";
-import LoadingSpinner from "../LoadingSpinner";
-import CardItem from "./CardItem";
-import DropCategories from "./dropCategories";
-import NotFoundProducts from "./NotFoundProducts";
-export default function ItemListContainer({ categorias, productos, loading }) {
+import React, { useContext } from "react";
+import {DropCategories, CardItem, NotFoundProducts} from "./index";
+import { CartContext } from "../../context/CartContext";
+
+
+export  function ItemListContainer({ categorias, productos, loading }) {
   return (
     <Container
       bg={"darkBrand.600"}
@@ -24,15 +20,15 @@ export default function ItemListContainer({ categorias, productos, loading }) {
       padding={"0.2rem"}
       textColor="white"
     >
-      {loading ? (
-        <LoadingSpinner />
-      ) : (
+
         <Stack textAlign={"center"}>
+          {categorias?
           <Center>
-            <DropCategories categorias={categorias} />
-          </Center>
+          <DropCategories categorias={categorias} />
+        </Center>:null}
           {productos.length > 0 ? (
             <Grid templateColumns="repeat(5, 1fr)" gap={6}>
+              
               {productos.map((producto) => (
                 <GridItem key={producto.id}>
                   <CardItem producto={producto} w="100%" />
@@ -43,7 +39,7 @@ export default function ItemListContainer({ categorias, productos, loading }) {
             <NotFoundProducts />
           )}
         </Stack>
-      )}
+     
     </Container>
   );
 }

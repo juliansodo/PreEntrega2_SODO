@@ -1,15 +1,27 @@
 import { Box, Button, Center, Flex } from "@chakra-ui/react";
-import React from "react";
+import React, { useContext } from "react";
+import { CartContext } from "../../context/CartContext";
 
-export default function AddOrRmvItem({size = 'sm', currentQty = 0, handlerAddItem, handlerRmvItem}) {
+export function AddOrRmvItem({ size = "sm", currentQty = 0, product }) {
+  const { addProduct, removeProduct, getQtyOfProduct } = useContext(CartContext);
+  const qtyProduct = getQtyOfProduct(product);
   return (
     <Box w={"100%"}>
-        <Flex gap={"2px"}>
-          <Button size={size}>-</Button>
-          <Button size={size}>{currentQty}</Button>
-          <Button size={size}>+</Button>
-
-        </Flex>
+      <Flex gap={"2px"}>
+        <Button
+          size={size}
+          onClick={() => removeProduct(product)}
+          isDisabled={qtyProduct > 0? false: true}
+        >
+          -
+        </Button>{" "}
+        <Button size={size} disabled={true}>
+          {qtyProduct}
+        </Button>
+        <Button size={size} onClick={() => addProduct(product)}>
+          +
+        </Button>
+      </Flex>
     </Box>
   );
 }

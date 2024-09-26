@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 
-export default function SpecificationsTable({
+export  function SpecificationsTable({
   especificaciones_tecnicas,
   titulo = "Especificaciones técnicas",
 }) {

@@ -2,17 +2,16 @@ import {
   Box,
   Text,
   Image,
-  Button,
   Card,
   CardBody,
-  CardFooter,
-  Container,
   Heading,
   Stack,
+  Center,
+  Spacer,
   Flex,
 } from "@chakra-ui/react";
 import React from "react";
-import AddOrRmvItem from "../Tienda/AddOrRmvItem";
+import { AddOrRmvItem } from "../Tienda/index";
 
 const dataHardcodeada = [
   {
@@ -20,45 +19,56 @@ const dataHardcodeada = [
     titulo: "Cucha",
     cantidad: 2,
     precio: 1400,
-    imagen: "https://http2.mlstatic.com/D_NQ_NP_683723-MLA76110991261_042024-O.webp"
+    imagen:
+      "https://http2.mlstatic.com/D_NQ_NP_683723-MLA76110991261_042024-O.webp",
   },
   {
     id: 2,
     titulo: "Hueso de chancho",
     cantidad: 4,
     precio: 1160,
-    imagen: "https://www.mivetshop.com.ar/media/catalog/product/cache/f45fac214c5ee5bb0b2a50e4e7188992/6/5/654561_mesa_de_trabajo_1_3.jpg"
+    imagen:
+      "https://www.mivetshop.com.ar/media/catalog/product/cache/f45fac214c5ee5bb0b2a50e4e7188992/6/5/654561_mesa_de_trabajo_1_3.jpg",
   },
 ];
 
-export default function CartProductListComponent({ tipo, data }) {
-  // tipo => lista o tarjeta
- data = dataHardcodeada;
+export default function CartProductListComponent({ tipo, cart, btnsAddOrRmv = true }) {
+  const isTarjeta = tipo === "tarjeta";
+
   return (
-    <>
-      <Stack>
-        {data.map((product) => {
-          if(tipo == 'tarjeta')
-          {
-            return <CardProduct producto={product} key={"card_" +product.id} />;
-          }
-          else
-          {
-            return <ProductsList producto={product} key={"list_" + product.id} />;
-          }
-        })}
-      </Stack>
-    </>
+    <Stack overflowY="scroll" maxH={isTarjeta ? "550px" : "400px"}>
+      {cart.length > 0 ? (
+        cart.map((product) => {
+          const ProductComponent =
+            isTarjeta || tipo !== "lista" ? CardProduct : ProductsList;
+          return (
+            <ProductComponent
+              producto={product}
+              key={`${tipo}_${product.id}`}
+              btnsAddOrRmv={btnsAddOrRmv}
+            />
+          );
+        })
+      ) : (
+        <Center>
+          <Text textAlign="center">
+            No hay productos en el carrito. <br />
+            ¡Agregá uno!
+          </Text>
+        </Center>
+      )}
+    </Stack>
   );
 }
 
-function CardProduct({ producto }) {
+function CardProduct({ producto, btnsAddOrRmv}) {
   return (
     <>
       <Card
         direction={{ base: "row", sm: "row" }}
         overflow="hidden"
         variant="outline"
+        minH={"8rem"}
       >
         <Box>
           <Image
@@ -68,33 +78,31 @@ function CardProduct({ producto }) {
             alt=""
           />
           <Box paddingX={"0.2rem"} paddingY={"0.2rem"}>
-          <AddOrRmvItem size={'xs'} />
+          {btnsAddOrRmv? <AddOrRmvItem product={producto} />: null}
           </Box>
         </Box>
 
         <Stack>
           <CardBody>
-            <Heading size="xs">{producto.titulo}</Heading>
+            <Heading size="xs">{producto.nombre}</Heading>
             <Text fontSize={"10"}>Precio x Unidad: ${producto.precio}</Text>
-          </CardBody>
-          <Box marginLeft={"0.2rem"}>
             <Text>Total: ${producto.cantidad * producto.precio}</Text>
-          </Box>
+
+          </CardBody>
         </Stack>
       </Card>
     </>
   );
 }
-
-function ProductsList({producto})
-{
+function ProductsList({ producto, btnsAddOrRmv }) {
   return (
     <>
-   <Card
-   padding={'1rem'}
+      <Card
+        padding={"1rem"}
         direction={{ base: "row", sm: "row" }}
         overflow="hidden"
         variant="outline"
+        minH={"120px"}
       >
         <Box>
           <Image
@@ -103,19 +111,25 @@ function ProductsList({producto})
             src={producto.imagen}
             alt=""
           />
-          
         </Box>
 
-        <Stack> 
+        <Box flex="1">
           <CardBody>
-            <Heading size="md">{producto.titulo}</Heading>
-            <Text fontSize={"1rem"}>Precio x Unidad: ${producto.precio}</Text>
+            <Flex justify="space-between" align="center">
+              <Box>
+                <Heading size="md">{producto.nombre}</Heading>
+                <Text fontSize={"0.8rem"}>
+                  Precio x Unidad: ${producto.precio}
+                </Text>
+              </Box>
+              <Box textAlign="right">
+                {btnsAddOrRmv? <AddOrRmvItem product={producto} />: null}
+                <Text>Total: ${producto.cantidad * producto.precio}</Text>
+              </Box>
+            </Flex>
           </CardBody>
-          <Box marginLeft={"0.2rem"}>
-            <Text>Total: ${producto.cantidad * producto.precio}</Text>
-          </Box>
-        </Stack>
+        </Box>
       </Card>
     </>
-  )
+  );
 }

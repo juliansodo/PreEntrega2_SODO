@@ -2,7 +2,7 @@ import { Box, Button, Center, Heading, Text, useColorModeValue } from "@chakra-u
 import React from "react";
 import { Link } from "react-router-dom";
 
-export default function NotFoundProducts() {
+export  function NotFoundProducts() {
   return (
     <div>
       <Box mt={"1rem"}>

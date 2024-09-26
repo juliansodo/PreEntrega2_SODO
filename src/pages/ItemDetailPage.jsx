@@ -1,43 +1,26 @@
-import { Box, Container } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { getProductById } from "../data";
+import { Container } from "@chakra-ui/react";
+import { useParams } from "react-router-dom";
 import LoadingSpinner from "../components/LoadingSpinner";
 import DetailProduct from "../components/Tienda/DetailProduct";
 import HeaderTienda from "../components/HeaderTienda/HeaderTienda";
 import RedirectToBack from "../components/RedirectToBack";
-
+import { useProduct } from "../hooks";
+import ErrorMessage from "../components/ErrorMessage";
 export function ItemDetailPage() {
   const { id } = useParams();
-  const [producto, setProducto] = useState({});
-  const [loadingPage, setLoadingPage] = useState(true);
-
-  useEffect(() => {
-    const getProducto = async () => {
-      try {
-        const data = await getProductById(id);
-        if (data.status) {
-          setProducto(data.data);
-          setLoadingPage(false);
-        }
-      } catch (error) {
-        setLoadingPage(false);
-      }
-    };
-    getProducto();
-  }, []);
-
+  const { products, loading, error } = useProduct(id);
+  console.log(error)
   return (
     <>
-    <HeaderTienda />
-    <RedirectToBack />
+      <HeaderTienda />
+      <RedirectToBack />
       <Container maxW={"5xl"}>
-        {!loadingPage ? (
-          <DetailProduct producto={producto} />
+        {loading ? (
+          <LoadingSpinner />
+        ) : error.error || !products? (
+          <ErrorMessage message={error.message} />
         ) : (
-          <Box position="relative" mt={"5rem"}>
-            <LoadingSpinner />
-          </Box>
+          <DetailProduct producto={products} />
         )}
       </Container>
     </>

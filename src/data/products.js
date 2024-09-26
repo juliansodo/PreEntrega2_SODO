@@ -2,6 +2,8 @@
 
 import axios from "axios";
 import {API} from "./endpoints";
+import { collection, getDocs } from "firebase/firestore";
+
 
 const getProducts = async () => {
     const result = {status:false, data:[]}

@@ -1,10 +1,9 @@
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import { Button, Menu, MenuButton, MenuItem, MenuList, useColorModeValue } from "@chakra-ui/react";
-import React, { useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
-export default function DropCategories({categorias}) {
-
+export  function DropCategories({categorias}) {
   return (
     <Menu >
       <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>

@@ -10,9 +10,13 @@ import {
   Image,
 } from "@chakra-ui/react";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
+import { MdShoppingCartCheckout } from "react-icons/md";
 
 import LogoImage from "./logo.png";
 import { Link, useLocation } from "react-router-dom";
+import BtnGoToCheckout from "../utils/BtnGoToCheckout";
+
+
 export default function NavbarComponent() {
   const { colorMode, toggleColorMode } = useColorMode();
   return (
@@ -34,6 +38,9 @@ export default function NavbarComponent() {
           <Spacer />
           <Flex alignItems={"center"}>
             <Stack direction={"row"} spacing={7}>
+              <BtnGoToCheckout>
+                <MdShoppingCartCheckout />
+              </BtnGoToCheckout>
               <Button onClick={toggleColorMode}>
                 {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
               </Button>
